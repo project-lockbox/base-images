@@ -1,0 +1,39 @@
+# Release pipeline of the platform base image alpine-3.24 (project-lockbox/core#536).
+# Lockbox dispatches this workflow for rebuilds (BaseLine alpine-3.24, build.workflow
+# alpine-3.24.yml); a push to the protected main branch that touches the image runs it too.
+name: alpine-3.24
+# Required: Lockbox matches a run it triggered by this title.
+run-name: lockbox ${{ inputs.lockbox-run-id }}
+on:
+  workflow_dispatch:
+    inputs:                     # every input Lockbox sends (GitHub rejects others)
+      lockbox-run-id:
+        type: string
+        required: false
+      lockbox-reason:
+        type: string
+        required: false
+  push:
+    branches: [main]            # protected: pull request required, no force push
+    paths:
+      - images/alpine-3.24/**
+      - .github/workflows/alpine-3.24.yml
+permissions: {}
+jobs:
+  build:
+    permissions:                # exactly what the template needs
+      contents: read
+      packages: write
+      id-token: write
+      attestations: write
+    # project-lockbox/ci-templates PR #1, by full commit SHA (never a branch or tag).
+    uses: project-lockbox/ci-templates/.github/workflows/lockbox-build.yml@558b6e30d6651bf3a04e77643f3ecc740e5bb6e1
+    with:
+      image: ghcr.io/project-lockbox/alpine-3.24
+      staging-image: ghcr.io/project-lockbox/staging/alpine-3.24
+      trivy-image: aquasec/trivy:0.76.2@sha256:8f6bb947dbc528902e11f2f5be52f7b519f6a39d5d148f41166f2040499768fb
+      context: images/alpine-3.24
+      containerfile: images/alpine-3.24/Containerfile
+      lockbox-run-id: ${{ inputs.lockbox-run-id }}
+      lockbox-reason: ${{ inputs.lockbox-reason }}
+    secrets: inherit

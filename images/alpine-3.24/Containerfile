@@ -1,0 +1,10 @@
+# Platform base image alpine-3.24 (Lockbox example A, project-lockbox/core#536).
+# Built, scanned, signed and released only by .github/workflows/alpine-3.24.yml
+# through the pinned Lockbox template. The upstream base is pinned by digest;
+# Lockbox's rebuilds pick up fixed Alpine packages through `apk upgrade`.
+FROM docker.io/library/alpine:3.24@sha256:f59abe656b692d901e184be3445e084786602108599d2a51d229c0f5a48c71bf
+
+RUN apk upgrade --no-cache
+
+LABEL org.opencontainers.image.source="https://github.com/project-lockbox/base-images" \
+      org.opencontainers.image.description="Platform base image alpine-3.24"
