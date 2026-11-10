@@ -26,8 +26,8 @@ jobs:
       packages: write
       id-token: write
       attestations: write
-    # project-lockbox/ci-templates PR #1, by full commit SHA (never a branch or tag).
-    uses: project-lockbox/ci-templates/.github/workflows/lockbox-build.yml@558b6e30d6651bf3a04e77643f3ecc740e5bb6e1
+    # project-lockbox/ci-templates PR #2 (template v3.0.2), by full commit SHA (never a branch or tag).
+    uses: project-lockbox/ci-templates/.github/workflows/lockbox-build.yml@ca27d3059b365c174190bf866efb880779307b93
     with:
       image: ghcr.io/project-lockbox/alpine-3.24
       staging-image: ghcr.io/project-lockbox/staging/alpine-3.24
