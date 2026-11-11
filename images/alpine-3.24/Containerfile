@@ -7,4 +7,5 @@ FROM docker.io/library/alpine:3.24@sha256:f59abe656b692d901e184be3445e0847866021
 RUN apk upgrade --no-cache
 
 LABEL org.opencontainers.image.source="https://github.com/project-lockbox/base-images" \
-      org.opencontainers.image.description="Platform base image alpine-3.24"
+      org.opencontainers.image.description="Platform base image alpine-3.24" \
+      org.opencontainers.image.vendor="project-lockbox"
